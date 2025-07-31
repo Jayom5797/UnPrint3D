@@ -1,4 +1,4 @@
-import React from 'react'
+
 import plaImage from '../assets/pla.png'
 import gidImage from '../assets/gid.png'
 import absImage from '../assets/abs.png'

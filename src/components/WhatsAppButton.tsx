@@ -1,4 +1,4 @@
-import React from 'react';
+;
 
 const WhatsAppButton = () => {
   const phoneNumber = "+918551908853"; // Replace with your full phone number including country code (e.g., 911234567890)
