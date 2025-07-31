@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "npx vite build --logLevel warn",
+    "vercel-build": "npx vite build --logLevel warn",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
