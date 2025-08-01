@@ -1,5 +1,7 @@
 
 
+import { Link } from 'react-router-dom';
+
 const Navbar = () => {
   return (
     <nav className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
@@ -7,37 +9,37 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <h1 className="text-2xl font-bold text-blue-600">
+            <Link to="/" className="text-2xl font-bold text-blue-600">
               UnPrint
-            </h1>
+            </Link>
           </div>
 
           {/* Navigation Links */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
-              <a
-                href="#home"
+              <Link
+                to="/"
                 className="text-gray-900 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors duration-200"
               >
                 Home
-              </a>
-              <a
-                href="#printing"
+              </Link>
+              <Link
+                to="/shop"
                 className="text-gray-900 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors duration-200"
               >
-                3D Printing
-              </a>
+                Shop
+              </Link>
               <a
-                href="#filaments"
+                href="/#how-it-works"
                 className="text-gray-900 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors duration-200"
               >
-                Filaments
+                How It Works
               </a>
               <a
-                href="#services"
+                href="/#featured-products"
                 className="text-gray-900 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors duration-200"
               >
-                Services
+                Featured Products
               </a>
               <a
                 href="#login"
@@ -62,4 +64,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default Navbar;

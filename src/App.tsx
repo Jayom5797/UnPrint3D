@@ -1,22 +1,22 @@
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route
+} from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import ShoppingPage from "./pages/ShoppingPage";
+import SocialLinks from './components/SocialLinks';
 
-import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import FeaturedProducts from './components/FeaturedProducts'
-import HowItWorks from './components/HowItWorks'
-import Footer from './components/Footer'
-import WhatsAppButton from './components/WhatsAppButton'
-
-function App() {
+const App = () => {
   return (
-    <div className="min-h-screen bg-white">
-      <Navbar />
-      <Hero />
-      <FeaturedProducts />
-      <HowItWorks />
-      <Footer />
-      <WhatsAppButton />
-    </div>
-  )
-}
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/shop" element={<ShoppingPage />} />
+      </Routes>
+      <SocialLinks />
+    </Router>
+  );
+};
 
-export default App
+export default App;
