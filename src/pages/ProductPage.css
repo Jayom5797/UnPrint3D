@@ -1,0 +1,123 @@
+/* Basic styles for the product page layout */
+.product-page {
+  display: flex;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: auto;
+  font-family: Arial, sans-serif;
+}
+
+.left-column {
+  flex: 1;
+  padding-right: 2rem;
+}
+
+.right-column {
+  flex: 1;
+}
+
+.product-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.price-section {
+  margin: 1rem 0;
+}
+
+.price-amount {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.color-selection {
+  margin: 1.5rem 0;
+}
+
+.color-selection p {
+  margin-bottom: 0.5rem;
+}
+
+.image-gallery {
+  display: flex;
+}
+
+.thumbnails {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.thumbnail-item {
+  width: 60px;
+  height: 60px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2px;
+}
+
+.thumbnail-item img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.thumbnail-item.active {
+  border: 2px solid #007bff;
+}
+
+.main-image {
+  margin-left: 20px;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.main-image img {
+  max-width: 100%;
+  max-height: 500px;
+  object-fit: contain;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.btn {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.btn-add-to-cart {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.btn-add-to-cart:hover {
+  background-color: #0056b3;
+}
+
+.btn-buy-now {
+  background-color: #28a745;
+  color: white;
+  border-color: #28a745;
+}
+
+.btn-buy-now:hover {
+  background-color: #218838;
+}

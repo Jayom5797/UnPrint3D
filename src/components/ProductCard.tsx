@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './ProductCard.css';
 
 interface ProductCardProps {
@@ -11,6 +11,11 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ id, image, title, description, price }) => {
+  const navigate = useNavigate();
+
+  const handleShopNow = () => {
+    navigate(`/product/${id}`);
+  };
   
 
   return (
@@ -24,7 +29,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, image, title, description
           <p className="product-description">{description}</p>
           <div className="product-price-button-wrapper">
             <span className="product-price">{price}</span>
-            <Link to={`/product/${id}`} className="button">Shop Now</Link>
+            <button onClick={handleShopNow} className="button">Shop Now</button>
           </div>
         </div>
       </div>

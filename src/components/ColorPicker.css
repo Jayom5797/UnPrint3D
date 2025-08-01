@@ -1,0 +1,84 @@
+.color-picker-wrapper .container-items {
+  display: flex;
+  transform-style: preserve-3d;
+  transform: perspective(1000px);
+  padding: 20px 0;
+}
+
+.color-picker-wrapper .item-color {
+  position: relative;
+  flex-shrink: 0;
+  width: 32px;
+  height: 40px;
+  border: none;
+  outline: none;
+  background: transparent;
+  transition: 500ms cubic-bezier(0.175, 0.885, 0.32, 1.1);
+  cursor: pointer;
+}
+
+.color-picker-wrapper .item-color::after {
+  position: absolute;
+  content: "";
+  inset: 0;
+  width: 40px;
+  height: 40px;
+  background-color: var(--color);
+  border-radius: 6px;
+  transform: scale(1.2);
+  pointer-events: none;
+  transition: 500ms cubic-bezier(0.175, 0.885, 0.32, 1.1);
+}
+
+.color-picker-wrapper .item-color::before {
+  position: absolute;
+  content: attr(aria-label);
+  left: 50%;
+  bottom: 52px;
+  font-size: 12px;
+  line-height: 1;
+  transform: translateX(-50%);
+  padding: 4px 8px;
+  background-color: #333;
+  color: white;
+  border-radius: 6px;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: 500ms cubic-bezier(0.175, 0.885, 0.32, 1.1);
+  white-space: nowrap;
+}
+
+.color-picker-wrapper .item-color:hover {
+  transform: scale(1.5);
+  z-index: 99999;
+}
+
+.color-picker-wrapper .item-color:hover::before {
+  opacity: 1;
+  visibility: visible;
+}
+
+.color-picker-wrapper .item-color:active::after {
+  transform: scale(1.1);
+}
+
+.color-picker-wrapper .item-color:hover + .item-color {
+  transform: scale(1.3);
+  z-index: 9999;
+}
+
+.color-picker-wrapper .item-color:hover + .item-color + .item-color {
+  transform: scale(1.15);
+  z-index: 999;
+}
+
+.color-picker-wrapper .item-color:has(+ .item-color:hover) {
+  transform: scale(1.3);
+  z-index: 9999;
+}
+
+.color-picker-wrapper .item-color:has(+ .item-color + .item-color:hover) {
+  transform: scale(1.15);
+  z-index: 999;
+}
