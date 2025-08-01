@@ -63,12 +63,12 @@ const ShoppingPage: React.FC = () => {
             <div className="grid grid-cols-2 gap-4">
               {products.map(product => (
                 <ProductCard 
-                  key={product.id}
-                  title={product.title}
-                  description={product.description}
-                  price={product.price}
-                  image={product.image}
-                />
+                  key={product.id} 
+                  id={product.id} 
+                  title={product.title} 
+                  description={product.description} 
+                  price={product.price} 
+                  image={product.image} />
               ))}
             </div>
           </div>
