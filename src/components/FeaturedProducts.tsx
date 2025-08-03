@@ -3,6 +3,8 @@ import plaImage from '../assets/pla.png'
 import gidImage from '../assets/gid.png'
 import absImage from '../assets/abs.png'
 
+import { Link } from 'react-router-dom';
+
 const FeaturedProducts = () => {
   const products = [
     {
@@ -80,9 +82,9 @@ const FeaturedProducts = () => {
 
         {/* View All Button */}
         <div className="text-center mt-12">
-          <button className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200">
+          <Link to="/shop" className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200">
             View All Filaments
-          </button>
+          </Link>
         </div>
       </div>
     </section>

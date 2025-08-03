@@ -1,5 +1,7 @@
 
 
+import { Link } from 'react-router-dom';
+
 const Hero = () => {
   return (
     <section className="bg-white py-20 lg:py-32">
@@ -16,17 +18,21 @@ const Hero = () => {
           </p>
           
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <Link
+              to="/shop"
+              className="bg-blue-600 text-white hover:bg-blue-700 px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+            >
+              Shop Filaments
+            </Link>
             <button className="bg-blue-600 text-white hover:bg-blue-700 px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl">
               Start 3D Printing
             </button>
-            <button className="bg-gray-900 text-white hover:bg-gray-800 px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl">
-              Shop Filaments
-            </button>
+            
           </div>
           
           {/* Optional: Add some visual elements */}
-          <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <div className="text-center">
               <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

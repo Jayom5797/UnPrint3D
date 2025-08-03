@@ -1,13 +1,15 @@
 
 
+import { Link } from 'react-router-dom';
+
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white py-12">
+    <footer className="bg-black text-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand Section */}
           <div className="md:col-span-2">
-            <h3 className="text-2xl font-bold text-blue-500 mb-4">UnPrint</h3>
+            <h3 className="text-2xl font-bold text-white mb-4">UnPrint</h3>
             <p className="text-gray-400 mb-6 max-w-md">
               Your one-stop platform for high-quality 3D printing services and premium filaments. We bring your digital creations to life.
             </p>
@@ -57,9 +59,7 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">
-                  Home
-                </a>
+                <Link to="/" className="text-gray-400 hover:text-white transition-colors duration-200">Home</Link>
               </li>
               <li>
                 <a href="#printing" className="text-gray-400 hover:text-white transition-colors duration-200">
@@ -67,9 +67,7 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#filaments" className="text-gray-400 hover:text-white transition-colors duration-200">
-                  Filaments
-                </a>
+                <Link to="/shop" className="text-gray-400 hover:text-white transition-colors duration-200">Filaments</Link>
               </li>
               <li>
                 <a href="#services" className="text-gray-400 hover:text-white transition-colors duration-200">
@@ -113,9 +111,9 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <div className="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm">
-            © 2025 UnPrint. All rights reserved.
+            2025 UnPrint. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">
