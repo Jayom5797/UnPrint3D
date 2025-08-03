@@ -74,12 +74,20 @@ const Navbar: React.FC<{ session: Session | null }> = ({ session }) => {
                   </button>
                 </div>
               ) : (
-                <Link
-                  to="/login"
-                  className="bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
-                >
-                  Login / Sign Up
-                </Link>
+                <div className="flex items-center space-x-4">
+                  <Link
+                    to="/login"
+                    className="bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
+                  >
+                    Login / Sign Up
+                  </Link>
+                  <Link
+                    to="/admin/login"
+                    className="bg-gray-200 text-gray-800 hover:bg-gray-300 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
+                  >
+                    Admin Login
+                  </Link>
+                </div>
               )}
             </div>
           </div>
@@ -146,6 +154,7 @@ const Navbar: React.FC<{ session: Session | null }> = ({ session }) => {
                 Logout
               </button>
             ) : (
+              <>
               <Link
                 to="/login"
                 onClick={handleLinkClick}
@@ -153,6 +162,14 @@ const Navbar: React.FC<{ session: Session | null }> = ({ session }) => {
               >
                 Login / Sign Up
               </Link>
+              <Link
+                to="/admin/login"
+                onClick={handleLinkClick}
+                className="bg-gray-200 text-gray-800 hover:bg-gray-300 block px-4 py-2 rounded-lg text-base font-medium text-center mt-2"
+              >
+                Admin Login
+              </Link>
+              </>
             )}
           </div>
         </div>
