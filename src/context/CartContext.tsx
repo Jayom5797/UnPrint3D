@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import { Product } from '../types';
 
 interface CartItem extends Product {
@@ -11,7 +11,7 @@ interface CartContextType {
   addToCart: (product: Product, quantity: number, color: string) => void;
   removeFromCart: (productId: number, color: string) => void;
   emptyCart: () => void;
-  updateQuantity: (productId: number, quantity: number) => void;
+  updateQuantity: (productId: number, color: string, quantity: number) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -25,7 +25,19 @@ export const useCart = () => {
 };
 
 export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+    try {
+      const localData = localStorage.getItem('cart');
+      return localData ? JSON.parse(localData) : [];
+    } catch (error) {
+      console.error("Could not parse cart data from localStorage", error);
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cartItems));
+  }, [cartItems]);
 
   const addToCart = (product: Product, quantity: number, color: string) => {
     setCartItems(prevItems => {
@@ -50,10 +62,10 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setCartItems([]);
   };
 
-  const updateQuantity = (productId: number, quantity: number) => {
+  const updateQuantity = (productId: number, color: string, quantity: number) => {
     setCartItems(prevItems =>
       prevItems.map(item =>
-        item.id === productId ? { ...item, quantity: Math.max(1, quantity) } : item
+        item.id === productId && item.color === color ? { ...item, quantity: Math.max(1, quantity) } : item
       )
     );
   };

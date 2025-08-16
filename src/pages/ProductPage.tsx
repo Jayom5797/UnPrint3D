@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
-import { Product } from '../types';
+import { Product, ProductColor, ProductImage } from '../types'; 
 import ColorPicker from '../components/ColorPicker';
 import { useCart } from '../context/CartContext';
 import './ProductPage.css';
@@ -12,7 +12,7 @@ const ProductPage: React.FC = () => {
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
-  const [selectedColor, setSelectedColor] = useState<{ name: string; hex: string; } | null>(null);
+  const [selectedColor, setSelectedColor] = useState<ProductColor | null>(null);
   const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
@@ -25,8 +25,8 @@ const ProductPage: React.FC = () => {
           .from('products')
           .select(`
             *,
-            product_images ( image_url ),
-            product_colors ( name, hex_code )
+            product_images ( * ),
+            product_colors ( * )
           `)
           .eq('id', id)
           .single();
@@ -34,20 +34,22 @@ const ProductPage: React.FC = () => {
         if (error) throw error;
 
         if (data) {
-          const imageUrls = data.product_images.map((img: any) => supabase.storage.from('product-images').getPublicUrl(img.image_url).data.publicUrl);
-          const formattedProduct: Product = {
-            id: data.id,
-            title: data.title,
-            description: data.description,
-            price: `₹${data.price}`,
-            image: imageUrls[0] || '',
-            images: imageUrls,
-            colors: data.product_colors.map((color: any) => ({ name: color.name, hex: color.hex_code })),
+          // Construct full public URLs for each image
+          const processedData = {
+            ...data,
+            product_images: data.product_images.map((img: ProductImage) => ({
+              ...img,
+              image_url: supabase.storage.from('product-images').getPublicUrl(img.image_url).data.publicUrl
+            })),
           };
-          setProduct(formattedProduct);
-          setSelectedImage(formattedProduct.images[0]);
-          if (formattedProduct.colors && formattedProduct.colors.length > 0) {
-            setSelectedColor(formattedProduct.colors[0]);
+          setProduct(processedData as Product);
+
+          // Set initial selected image and color
+          if (processedData.product_images && processedData.product_images.length > 0) {
+            setSelectedImage(processedData.product_images[0].image_url);
+          }
+          if (processedData.product_colors && processedData.product_colors.length > 0) {
+            setSelectedColor(processedData.product_colors[0]);
           }
         }
       } catch (error) {
@@ -77,13 +79,13 @@ const ProductPage: React.FC = () => {
       <div className="left-column">
         <div className="image-gallery">
           <div className="thumbnails">
-            {product.images.map((img, index) => (
+            {product.product_images.map((img, index) => (
               <div 
                 key={index} 
-                className={`thumbnail-item ${img === selectedImage ? 'active' : ''}`}
-                onMouseEnter={() => setSelectedImage(img)}
+                className={`thumbnail-item ${img.image_url === selectedImage ? 'active' : ''}`}
+                onMouseEnter={() => setSelectedImage(img.image_url)}
               >
-                <img src={img} alt={`${product.title} thumbnail ${index + 1}`} />
+                <img src={img.image_url} alt={`${product.title} thumbnail ${index + 1}`} />
               </div>
             ))}
           </div>
@@ -110,12 +112,12 @@ const ProductPage: React.FC = () => {
         <h1 className="product-title">{product.title}</h1>
         <p>{product.description}</p>
         <div className="price-section">
-            <span className="price-amount">{product.price}</span>
+            <span className="price-amount">₹{product.price.toFixed(2)}</span>
         </div>
-        {product.colors && (
+        {product.product_colors && product.product_colors.length > 0 && (
           <div className="color-selection">
             <p>Color: <strong>{selectedColor?.name}</strong></p>
-            <ColorPicker colors={product.colors} onColorSelect={setSelectedColor} />
+            <ColorPicker colors={product.product_colors} onColorSelect={setSelectedColor} />
           </div>
         )}
         <div className="quantity-selector">
@@ -130,11 +132,14 @@ const ProductPage: React.FC = () => {
           <button 
             className="btn btn-add-to-cart"
             onClick={() => {
-              if (product && selectedColor) {
-                addToCart(product, quantity, selectedColor.name);
+              if (product) {
+                const colorToAdd = (product.product_colors && product.product_colors.length > 0) ? selectedColor?.name : 'Default';
+                if (colorToAdd) {
+                  addToCart(product, quantity, colorToAdd);
+                }
               }
             }}
-            disabled={!product || !selectedColor}
+            disabled={!product || (product.product_colors && product.product_colors.length > 0 && !selectedColor)}
           >
             Add to Cart
           </button>

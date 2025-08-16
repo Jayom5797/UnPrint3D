@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Confirmation</title>
+<style>
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+    .container {
+        max-width: 600px;
+        margin: 20px auto;
+        background-color: #ffffff;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid #e2e8f0;
+    }
+    .header {
+        background-color: #1a1a1a;
+        color: #ffffff;
+        padding: 20px;
+        text-align: center;
+    }
+    .header h1 {
+        margin: 0;
+        font-size: 24px;
+    }
+    .content {
+        padding: 30px;
+        color: #333;
+    }
+    .content h2 {
+        color: #1a1a1a;
+    }
+    .order-summary, .item-details {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+    .item-details th, .item-details td {
+        border-bottom: 1px solid #e2e8f0;
+        padding: 15px 0;
+        text-align: left;
+    }
+    .item-details th {
+        color: #6b7280;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 12px;
+    }
+    .item-details .product-info {
+        display: flex;
+        align-items: center;
+    }
+    .item-details img {
+        width: 60px;
+        height: 60px;
+        border-radius: 4px;
+        margin-right: 15px;
+    }
+    .totals-table {
+        width: 100%;
+        margin-top: 20px;
+    }
+    .totals-table td {
+        padding: 5px 0;
+    }
+    .totals-table .label {
+        text-align: left;
+        color: #6b7280;
+    }
+    .totals-table .value {
+        text-align: right;
+        font-weight: bold;
+    }
+    .totals-table .total .value {
+        font-size: 1.2em;
+        color: #1a1a1a;
+    }
+    .footer {
+        background-color: #f8f9fa;
+        color: #6b7280;
+        padding: 20px;
+        text-align: center;
+        font-size: 12px;
+    }
+    .footer a {
+        color: #1a1a1a;
+        text-decoration: none;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>UnPrint3D</h1>
+    </div>
+    <div class="content">
+        <h2>Thank you for your order!</h2>
+        <p>Hi [Customer Name], we've received your order and are getting it ready for shipment. We'll notify you once it's on its way.</p>
+
+        <table class="order-summary">
+            <tr>
+                <td><strong>Order ID:</strong> [Order ID]</td>
+                <td style="text-align: right;"><strong>Order Date:</strong> [Order Date]</td>
+            </tr>
+        </table>
+
+        <table class="item-details">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th style="text-align: right;">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Start of loop for each item -->
+                <tr>
+                    <td>
+                        <div class="product-info">
+                            <img src="[Product Image URL]" alt="[Product Name]">
+                            <div>
+                                <strong>[Product Name]</strong><br>
+                                <small>Color: [Product Color]</small>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="vertical-align: middle;">[Quantity]</td>
+                    <td style="vertical-align: middle; text-align: right;">₹[Price]</td>
+                </tr>
+                <!-- End of loop -->
+            </tbody>
+        </table>
+
+        <table class="totals-table">
+            <tr>
+                <td class="label">Subtotal</td>
+                <td class="value">₹[Subtotal]</td>
+            </tr>
+            <tr>
+                <td class="label">Shipping</td>
+                <td class="value">Free</td>
+            </tr>
+            <tr class="total">
+                <td class="label">Total</td>
+                <td class="value">₹[Total Price]</td>
+            </tr>
+        </table>
+
+        <p><strong>Shipping to:</strong><br>[Customer Name]<br>[Shipping Address]</p>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 UnPrint3D. All rights reserved.</p>
+        <p><a href="[Your Website URL]">Visit our store</a> | <a href="mailto:[Your Email]">Contact us</a></p>
+    </div>
+</div>
+</body>
+</html>

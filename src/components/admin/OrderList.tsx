@@ -1,26 +1,9 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../supabaseClient';
-
-// Define the new interface based on the RPC function's return type
-interface OrderItem {
-  quantity: number;
-  color: string;
-  price: number;
-  product_title: string;
-}
-
-interface Order {
-  id: number;
-  created_at: string;
-  total_price: number;
-  customer_id: string;
-  status: string;
-  customer_email: string;
-  order_items: OrderItem[];
-}
+import { OrderWithDetails } from '../../types'; // Import the shared type
 
 const OrderList = () => {
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [orders, setOrders] = useState<OrderWithDetails[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 

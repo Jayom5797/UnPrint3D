@@ -28,45 +28,39 @@ const AddProductForm = () => {
     setIsSubmitting(true);
     setError('');
 
+    let imageUrl = '';
+    let fileName = '';
+
     try {
-      // Step 1: Insert basic product info to get an ID
-      const { data: productData, error: productError } = await supabase
-        .from('products')
-        .insert({ title, description, price: parseFloat(price) })
-        .select('id')
-        .single();
-
-      if (productError) throw productError;
-      const productId = productData.id;
-
-      // Step 2: Upload image to Supabase Storage
+      // Step 1: Upload image to Supabase Storage
       const fileExt = imageFile.name.split('.').pop();
-      const fileName = `${productId}/${Date.now()}.${fileExt}`;
+      fileName = `${Date.now()}.${fileExt}`;
       const { error: uploadError } = await supabase.storage
         .from('product-images')
         .upload(fileName, imageFile);
 
       if (uploadError) throw uploadError;
 
-      // Step 3: Get public URL and insert into product_images
+      // Get public URL
       const { data: urlData } = supabase.storage.from('product-images').getPublicUrl(fileName);
-      const imageUrl = urlData.publicUrl;
-      const { error: imageInsertError } = await supabase
-        .from('product_images')
-        .insert({ product_id: productId, image_url: imageUrl });
+      imageUrl = urlData.publicUrl;
 
-      if (imageInsertError) throw imageInsertError;
-
-      // Step 4: Parse and insert colors
-      const colorsArray = colors.split(',').map(color => {
+      // Step 2: Parse colors
+      const parsedColors = colors.split(',').map(color => {
         const [name, hex] = color.trim().split(' ');
-        return { product_id: productId, name: name || 'Color', hex_code: hex || '#000000' };
+        return { name: name || 'Color', hex_code: hex || '#000000' };
       });
 
-      if (colorsArray.length > 0) {
-        const { error: colorInsertError } = await supabase.from('product_colors').insert(colorsArray);
-        if (colorInsertError) throw colorInsertError;
-      }
+      // Step 3: Call the RPC function to create product and related data
+      const { error: rpcError } = await supabase.rpc('create_product_with_details', {
+        p_title: title,
+        p_description: description,
+        p_price: parseFloat(price),
+        p_image_url: imageUrl,
+        p_colors: parsedColors
+      });
+
+      if (rpcError) throw rpcError;
 
       alert('Product added successfully!');
       // Reset form
@@ -81,7 +75,10 @@ const AddProductForm = () => {
 
     } catch (err: any) {
       setError(err.message);
-      // TODO: Add cleanup logic here, e.g., delete uploaded image if subsequent steps fail
+      // If something went wrong after image upload, try to delete the orphaned image
+      if (imageUrl) {
+        supabase.storage.from('product-images').remove([fileName]);
+      }
     } finally {
       setIsSubmitting(false);
     }

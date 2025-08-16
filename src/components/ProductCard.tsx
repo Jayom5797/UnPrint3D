@@ -7,7 +7,7 @@ interface ProductCardProps {
   image: string;
   title: string;
   description: string;
-  price: string;
+  price: number;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ id, image, title, description, price }) => {
@@ -28,7 +28,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, image, title, description
           <h3 className="product-title">{title}</h3>
           <p className="product-description">{description}</p>
           <div className="product-price-button-wrapper">
-            <span className="product-price">{price}</span>
+            <span className="product-price">₹{price.toFixed(2)}</span>
             <button onClick={handleShopNow} className="button">Shop Now</button>
           </div>
         </div>

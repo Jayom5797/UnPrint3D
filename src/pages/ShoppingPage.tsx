@@ -4,8 +4,13 @@ import ProductCard from '../components/ProductCard';
 import { Product } from '../types';
 import { supabase } from '../supabaseClient';
 
+// Define a new type for the product data used in this component
+interface ProductForCard extends Product {
+  primary_image_url: string;
+}
+
 const ShoppingPage: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<ProductForCard[]>([]);
   const [loading, setLoading] = useState(true);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
@@ -20,26 +25,23 @@ const ShoppingPage: React.FC = () => {
         const { data, error } = await supabase
           .from('products')
           .select(`
-            id,
-            title,
-            description,
-            price,
+            *,
             product_images ( image_url )
           `);
 
         if (error) throw error;
 
         if (data) {
-          const formattedProducts = data.map(product => ({
-            id: product.id,
-            title: product.title,
-            description: product.description,
-            price: `₹${product.price}`,
-            image: product.product_images[0]?.image_url ? supabase.storage.from('product-images').getPublicUrl(product.product_images[0].image_url).data.publicUrl : '',
-            images: product.product_images.map((img: any) => supabase.storage.from('product-images').getPublicUrl(img.image_url).data.publicUrl),
-            colors: [], // Colors will be fetched on the product detail page
+          const processedData = data.map(product => ({
+            ...product,
+            product_images: product.product_images || [],
+            product_colors: product.product_colors || [],
+            // Get the public URL for the primary image
+            primary_image_url: product.product_images?.[0]?.image_url 
+              ? supabase.storage.from('product-images').getPublicUrl(product.product_images[0].image_url).data.publicUrl 
+              : '/placeholder.png', // Fallback image
           }));
-          setProducts(formattedProducts);
+          setProducts(processedData as ProductForCard[]);
         }
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -88,9 +90,9 @@ const ShoppingPage: React.FC = () => {
                     key={product.id} 
                     id={product.id} 
                     title={product.title} 
-                    description={product.description} 
+                    description={product.description || ''} 
                     price={product.price} 
-                    image={product.image} />
+                    image={product.primary_image_url} />
                 ))
               )}
             </div>

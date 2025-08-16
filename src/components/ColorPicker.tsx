@@ -1,9 +1,11 @@
 import React from 'react';
 import './ColorPicker.css';
 
+import { ProductColor } from '../types';
+
 interface ColorPickerProps {
-  colors: { name: string; hex: string; }[];
-  onColorSelect: (color: { name: string; hex: string; }) => void;
+  colors: ProductColor[];
+  onColorSelect: (color: ProductColor) => void;
 }
 
 const ColorPicker: React.FC<ColorPickerProps> = ({ colors, onColorSelect }) => {
@@ -14,7 +16,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({ colors, onColorSelect }) => {
           <button
             key={color.name}
             className="item-color"
-            style={{ '--color': color.hex } as React.CSSProperties}
+            style={{ '--color': color.hex_code } as React.CSSProperties}
             aria-label={color.name}
             onClick={() => onColorSelect(color)}
           />
